@@ -15,10 +15,10 @@ def walk(path):
         with os.scandir(path) as it:
             for entry in it:
                 if os.path.isdir(entry):
-                    click.echo("% s % s"%(entry.name, "<dir>"))
+                    click.echo("{:30.30}  {:60}".format(entry.name, "<dir>"))
                     walk(entry.path)
                 if os.path.isfile(entry):
-                    click.echo("% s % s %s"%(entry.name, entry.path, md5(entry.path)))
+                    click.echo("{:30.30}  {:60.60}  {:10}".format(entry.name, entry.path, md5(entry.path)))
     except OSError as error:
         click.echo(error)
 
