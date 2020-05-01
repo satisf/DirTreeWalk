@@ -11,10 +11,21 @@ def cli(path):
 
 
 def walk(path):
-    absolute_path = os.path.abspath(path)
-    with os.scandir(absolute_path) as it:
-        for entry in it:
-            if os.path.isdir(entry):
-                walk(entry.path)
-            if os.path.isfile(entry):
-                click.echo(entry.path)
+    try:
+        with os.scandir(path) as it:
+            for entry in it:
+                if os.path.isdir(entry):
+                    click.echo("% s % s"%(entry.name, "<dir>"))
+                    walk(entry.path)
+                if os.path.isfile(entry):
+                    click.echo("% s % s %s"%(entry.name, entry.path, md5(entry.path)))
+    except OSError as error:
+        click.echo(error)
+
+
+def md5(filename):
+    hash_md5 = hashlib.md5()
+    with open(filename, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
