@@ -1,5 +1,6 @@
 import click
 import os
+import sys
 import hashlib
 
 
@@ -32,3 +33,9 @@ def md5(filename):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        walk(sys.argv[1])
+    else:
+        click.echo("please enter a directory")
