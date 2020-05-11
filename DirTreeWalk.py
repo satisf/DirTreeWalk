@@ -5,9 +5,10 @@ import hashlib
 
 
 @click.command()
+@click.help_option('-h')
 @click.argument('path')
 def cli(path):
-    """Simple tool that recursively lists a directory with the MD5 Hashes of the files"""
+    """Simple tool that recursively lists the directory PATH with the MD5 Hashes of the files"""
     walk(path)
 
 
@@ -35,7 +36,4 @@ def md5(filename):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        walk(sys.argv[1])
-    else:
-        click.echo("please enter a directory")
+    cli()
